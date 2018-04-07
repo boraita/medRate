@@ -5,8 +5,9 @@ import { Subject } from 'rxjs/Subject';
 export class BeatAnalyzerService {
   beat$ = new Subject<number>();
   analyser: AnalyserNode;
+  valueRate: number;
 
-  constructor() { }
+  constructor() {}
 
   async init() {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -21,6 +22,7 @@ export class BeatAnalyzerService {
       this.analyser.getFloatTimeDomainData(dataArray);
       const samples = Array.from(dataArray).map(Math.abs);
       const avgPower = samples.reduce((x, y) => x + y) / samples.length;
+      this.valueRate = avgPower;
       this.beat$.next(avgPower);
       lastEvent = new Date().getTime();
       requestAnimationFrame(analyze);
