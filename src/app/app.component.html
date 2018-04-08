@@ -1,2 +1,4 @@
-<div> {{(0.2 + (beat$|async) * 10)}}</div>
-<p-chart #chart type="line" [data]="data" [responsive]="true" [width]="40" [height]="80"></p-chart>
+<p-button (onClick)="startStop()" icon="fa fa-fw fa-check" label="Stop"></p-button>
+<p-button (onClick)="switch()" icon="fa fa-fw fa-check" label="Switch device"></p-button>
+<p-chart #chart type="line" [data]="data" [responsive]="true" [options]="options"></p-chart>
+
