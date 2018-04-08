@@ -16,14 +16,22 @@ export class AppComponent implements OnInit {
   options: any;
   labels = [];
   exportFile = [];
+  minVal: number;
+  maxVal: number;
+
   numberPoint = 700;
-  maxVal = 2;
-  minVal = 0;
+  heardRateMax = 0.57;
+  heardRateMin = 0.14;
+  breathRateMax = 0.1;
+  breathRateMin = 0.002;
+
   @ViewChild('chart') chart: UIChart;
 
   constructor(private beatAnalyzer: BeatAnalyzerService) {}
 
   ngOnInit(): void {
+    this.minVal = this.heardRateMin;
+    this.maxVal = this.heardRateMax;
     this.beatAnalyzer.analyser();
     this.chartConfiguration();
     this.beatAnalyzer.beat$.subscribe(val => {
@@ -49,8 +57,8 @@ export class AppComponent implements OnInit {
     this.beatAnalyzer.playSound();
   }
   switch() {
-    this.maxVal = 0.001;
-    this.minVal = 0.0001;
+    this.maxVal = this.heardRateMax === this.maxVal ? this.breathRateMax : this.heardRateMax;
+    this.minVal = this.heardRateMin === this.minVal ? this.breathRateMin : this.heardRateMin;
   }
   chartConfiguration() {
     for (let value = 1; value <= this.numberPoint; value++) {
