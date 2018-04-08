@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
   @ViewChild('chart') chart: UIChart;
 
   ngOnInit(): void {
-    this.beatAnalyzer.init();
+    this.beatAnalyzer.analyser();
     for (let value = 1; value <= 60; value++) {
       this.labels.push(value);
     }
