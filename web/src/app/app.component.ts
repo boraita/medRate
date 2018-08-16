@@ -1,9 +1,6 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { UIChart } from 'primeng/primeng';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/bufferTime';
-import { Subject } from 'rxjs/Subject';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 import { BeatAnalyzerService } from './beat-analyzer.service';
 import { devicesEnum } from './devices.enum';
@@ -28,7 +25,7 @@ export class AppComponent implements OnInit {
 	heardRateMin = 0.14;
 	breathRateMax = 0.1;
 	breathRateMin = 0.002;
-
+	
 	@ViewChild('chart') chart: UIChart;
 
 	constructor(private beatAnalyzer: BeatAnalyzerService) {}
