@@ -25,8 +25,9 @@ export class AppComponent implements OnInit {
 	heardRateMin = 0.14;
 	breathRateMax = 0.1;
 	breathRateMin = 0.002;
-	
-	@ViewChild('chart') chart: UIChart;
+
+	@ViewChild('chart')
+	chart: UIChart;
 
 	constructor(private beatAnalyzer: BeatAnalyzerService) {}
 
