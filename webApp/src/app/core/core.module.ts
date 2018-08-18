@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 import { environment } from '../../environments/environment';
+import { NotAccessComponent } from './components/not-access/not-access.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { environment } from '../../environments/environment';
       enabled: environment.production
     })
   ],
-  declarations: []
+  declarations: [NotAccessComponent],
+  exports: [NotAccessComponent]
 })
 export class CoreModule {}
