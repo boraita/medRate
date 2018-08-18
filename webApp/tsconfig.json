@@ -13,13 +13,9 @@
     "typeRoots": ["node_modules/@types"],
     "lib": ["es2017", "dom"],
     "paths": {
-      "@monitoring/*": ["src/app/applications/monitoring/*"],
-      "@reporting/*": ["src/app/applications/reporting/*"],
       "@applications/*": ["src/app/applications/*"],
       "@core/*": ["src/app/core/*"],
       "@shared/*": ["src/app/shared/*"],
-      "@public/*": ["src/app/public/*"],
-      "@testing/*": ["src/app/testing/*"],
       "@assets/*": ["src/assets/*"],
       "@environments/*": ["src/environments/*"],
       "@app/*": ["src/app/*"]
