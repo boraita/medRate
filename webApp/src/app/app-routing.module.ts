@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { NotAccessComponent } from './core/components/not-access/not-access.component';
+import { NotAccessComponent } from '@core/components/not-access/not-access.component';
 
 const routes: Routes = [
   {
