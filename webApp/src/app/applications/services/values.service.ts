@@ -20,6 +20,7 @@ export class ValuesService {
   private breathRateMin = BREATH_RATE_MIN;
 
   constructor() {
+    debugger;
     this.maxVal = this.heardRateMax;
     this.minVal = this.heardRateMin;
     this.numberPoint = POSITIONS_NUMBERS_CHART;

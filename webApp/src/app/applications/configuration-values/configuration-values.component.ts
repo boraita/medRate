@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { ValuesService } from '../services/values.service';
 import { devicesEnum } from '@core/enums/devices.enum';
 
@@ -12,6 +12,7 @@ export class ConfigurationValuesComponent implements OnInit {
   minVal: number;
   device: devicesEnum;
   numberPoint: number;
+  @Input() buttonStartStop: string;
   @Output()
   startStop: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output()

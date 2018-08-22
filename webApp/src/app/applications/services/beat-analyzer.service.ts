@@ -7,12 +7,15 @@ export class BeatAnalyzerService {
   signal: AnalyserNode;
   valueRate: number;
   lastEvent: number;
+  audioCtx: AudioContext;
+  stream: MediaStream;
 
   async analyser() {
-    const stream = await this.getStream();
-    const audioCtx = new AudioContext();
-    const source = audioCtx.createMediaStreamSource(stream);
-    this.signal = audioCtx.createAnalyser();
+    this.stream = await this.getStream();
+    this.audioCtx = new AudioContext();
+    this.audioCtx.resume();
+    const source = this.audioCtx.createMediaStreamSource(this.stream);
+    this.signal = this.audioCtx.createAnalyser();
     const dataArray = new Float32Array(this.signal.fftSize);
     this.lastEvent = new Date().getTime();
     source.connect(this.signal);
@@ -32,18 +35,28 @@ export class BeatAnalyzerService {
 
   playSound() {
     const audioCtx = new AudioContext();
-    const oscillator = audioCtx.createOscillator();
-    oscillator.type = 'square';
-    oscillator.frequency.value = 5000; // value in hertz
-    oscillator.connect(audioCtx.destination);
-    oscillator.start();
+    audioCtx.resume().then(() => {
+      const oscillator = audioCtx.createOscillator();
+      oscillator.type = 'square';
+      oscillator.frequency.value = 5000; // value in hertz
+      oscillator.connect(audioCtx.destination);
+      oscillator.start();
+    });
+  }
+  stopRecord() {
+    this.audioCtx.suspend();
+    this.stream.getTracks().forEach(track => track.stop());
+  }
+  startRecord() {
+    this.analyser();
   }
   getStream() {
-    if (navigator.mediaDevices.getUserMedia === undefined) {
+    if (!navigator.mediaDevices.getUserMedia) {
       navigator.mediaDevices.getUserMedia = function(constraints) {
         const n = <any>navigator;
         // First get ahold of the legacy getUserMedia, if present
-        const getUserMedia = n.webkitGetUserMedia || n.mozGetUserMedia;
+        const getUserMedia =
+          n.getUserMedia || n.webkitGetUserMedia || n.mozGetUserMedia;
 
         // Some browsers just don't implement it - return a rejected promise with an error
         // to keep a consistent interface

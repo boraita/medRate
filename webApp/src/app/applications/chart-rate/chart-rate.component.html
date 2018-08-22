@@ -1,6 +1,8 @@
 <p-sidebar [(visible)]="displaySidebar">
-  <app-configuration-values (startStop)="startStop()" (resetChart)="resetValuesChart()"></app-configuration-values>
+  <app-configuration-values (startStop)="startStop()" (resetChart)="resetValuesChart()" [buttonStartStop]="buttonStartStop"></app-configuration-values>
 </p-sidebar>
-
-<p-button (onClick)="displaySidebar = true" label="Config"></p-button>
+<div>
+  <p-button (onClick)="displaySidebar = true" label="Config"></p-button>
+  <p-button (onClick)="startStop()" [label]="buttonStartStop"></p-button>
+</div>
 <p-chart #chart type="line" [data]="data" [responsive]="true" [options]="options"></p-chart>

@@ -16,8 +16,8 @@ export class ChartRateComponent implements OnInit {
   labels = [];
   exportFile = [];
   beatAnalizeSubscription: Subscription;
-
   displaySidebar: boolean;
+  buttonStartStop: string;
 
   @ViewChild('chart')
   chart: UIChart;
@@ -27,19 +27,19 @@ export class ChartRateComponent implements OnInit {
     private valuesService: ValuesService
   ) {}
   ngOnInit(): void {
+    this.buttonStartStop = 'Start';
     this.chartConfiguration();
-    this.initBeatChart();
   }
 
   startStop() {
-    if (!this.beatAnalyzer.beat$.closed) {
+    if (this.beatAnalyzer.audioCtx && this.beatAnalyzer.audioCtx.state === 'running') {
+      this.beatAnalyzer.stopRecord();
+      this.buttonStartStop = 'Start';
       this.beatAnalizeSubscription.unsubscribe();
     } else {
-      this.beatAnalyzer.analyser();
+      this.initBeatChart();
+      this.buttonStartStop = 'Stop';
     }
-  }
-  playSound() {
-    this.beatAnalyzer.playSound();
   }
 
   chartConfiguration() {
@@ -72,7 +72,7 @@ export class ChartRateComponent implements OnInit {
     this.labels = [];
     for (
       let value = 1;
-      value <= this.valuesService.numberPoint * 100;
+      value <= this.valuesService.numberPoint * 68;
       value++
     ) {
       this.labels.push(value);
@@ -92,17 +92,17 @@ export class ChartRateComponent implements OnInit {
       });
       if (
         this.data.datasets[0].data.length ===
-        this.valuesService.numberPoint * 100
+        this.valuesService.numberPoint * 68
       ) {
         this.data.datasets[0].data.shift();
       }
-      this.data.datasets[0].data.push(val * 100);
+      this.data.datasets[0].data.push(val * 68);
       this.chart.refresh();
     });
   }
   resetValuesChart() {
     this.chart.reinit();
     this.data.datasets[0].data = [];
-    this.setPointerNumbers();
+    this.chartConfiguration();
   }
 }
