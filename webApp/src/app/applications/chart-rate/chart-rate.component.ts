@@ -2,8 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { UIChart } from 'primeng/chart';
 
-import { devicesEnum } from '../../core/enums/devices.enum';
 import { BeatAnalyzerService } from '../services/beat-analyzer.service';
+import { ValuesService } from '@applications/services/values.service';
 
 @Component({
   selector: 'app-chart-rate',
@@ -15,25 +15,18 @@ export class ChartRateComponent implements OnInit {
   options: any;
   labels = [];
   exportFile = [];
-  minVal: number;
-  maxVal: number;
   beatAnalizeSubscription: Subscription;
-  device: devicesEnum;
 
-  numberPoint = 700;
-  heardRateMax = 0.57;
-  heardRateMin = 0.14;
-  breathRateMax = 0.1;
-  breathRateMin = 0.002;
+  displaySidebar: boolean;
 
   @ViewChild('chart')
   chart: UIChart;
 
-  constructor(private beatAnalyzer: BeatAnalyzerService) {}
+  constructor(
+    private beatAnalyzer: BeatAnalyzerService,
+    private valuesService: ValuesService
+  ) {}
   ngOnInit(): void {
-    this.device = devicesEnum.heart;
-    this.minVal = this.heardRateMin;
-    this.maxVal = this.heardRateMax;
     this.chartConfiguration();
     this.initBeatChart();
   }
@@ -48,28 +41,13 @@ export class ChartRateComponent implements OnInit {
   playSound() {
     this.beatAnalyzer.playSound();
   }
-  switch() {
-    this.device =
-      devicesEnum.breathe === this.device
-        ? devicesEnum.heart
-        : devicesEnum.breathe;
-    this.chart.reinit();
-    this.data.datasets[0].data = [];
-    this.maxVal =
-      this.heardRateMax === this.maxVal
-        ? this.breathRateMax
-        : this.heardRateMax;
-    this.minVal =
-      this.heardRateMin === this.minVal
-        ? this.breathRateMin
-        : this.heardRateMin;
-  }
+
   chartConfiguration() {
     this.setPointerNumbers();
     this.options = {
       title: {
         display: true,
-        text: 'Rate value'
+        text: 'Rate ' + this.valuesService.device
       },
       tooltips: {
         enabled: false
@@ -83,7 +61,6 @@ export class ChartRateComponent implements OnInit {
       labels: this.labels,
       datasets: [
         {
-          label: 'Rate value',
           data: [],
           fill: false,
           borderColor: '#565656'
@@ -93,7 +70,11 @@ export class ChartRateComponent implements OnInit {
   }
   setPointerNumbers() {
     this.labels = [];
-    for (let value = 1; value <= this.numberPoint; value++) {
+    for (
+      let value = 1;
+      value <= this.valuesService.numberPoint * 100;
+      value++
+    ) {
       this.labels.push(value);
     }
     this.chart.reinit();
@@ -101,16 +82,27 @@ export class ChartRateComponent implements OnInit {
   initBeatChart() {
     this.beatAnalyzer.analyser();
     this.beatAnalizeSubscription = this.beatAnalyzer.beat$.subscribe(val => {
-      val = val > this.minVal && val < this.maxVal ? val : 0;
+      val =
+        val > this.valuesService.minVal && val < this.valuesService.maxVal
+          ? val
+          : 0;
       this.exportFile.push({
         time: this.beatAnalyzer.lastEvent,
         value: val
       });
-      if (this.data.datasets[0].data.length === this.numberPoint) {
+      if (
+        this.data.datasets[0].data.length ===
+        this.valuesService.numberPoint * 100
+      ) {
         this.data.datasets[0].data.shift();
       }
       this.data.datasets[0].data.push(val * 100);
       this.chart.refresh();
     });
+  }
+  resetValuesChart() {
+    this.chart.reinit();
+    this.data.datasets[0].data = [];
+    this.setPointerNumbers();
   }
 }
