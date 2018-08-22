@@ -1,0 +1,23 @@
+<h4 class="first">Actions</h4>
+<div>
+  <p-button (onClick)="setStartStop()" [label]="buttonStartStop"></p-button>
+  <p-button (onClick)="switch()" label="Switch device"></p-button>
+  <p-button (onClick)="applyChanges()" label="Apply changes"></p-button>
+</div>
+<div>
+  <h4 class="first">Input: {{device}}</h4>
+</div>
+<div>
+  <div width="100%">
+    <span>Min Rate</span>
+    <input type="number" [value]="minVal" (input)="minVal = + $event.target.value" [min]="0.01" [step]="0.01" ngModel>
+  </div>
+  <div width="100%">
+    <span>Max Rate</span>
+    <input type="number" [value]="maxVal" (input)="maxVal = + $event.target.value" [min]="0.1" [step]="0.01" ngModel>
+  </div>
+  <div width="100%">
+    <span>Seconds</span>
+    <input type="number" [value]="numberPoint" (input)="numberPoint = + $event.target.value" [min]="1" [step]="1" ngModel>
+  </div>
+</div>
