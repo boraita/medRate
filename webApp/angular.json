@@ -18,12 +18,12 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/webApp",
+            "outputPath": "dist/medapp",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
-            "assets": ["src/favicon.ico", "src/assets", "src/manifest.json"],
+            "assets": ["src/favicon.png", "src/assets", "src/manifest.json"],
             "styles": [
               "node_modules/primeicons/primeicons.css",
               "node_modules/primeng/resources/themes/nova-light/theme.css",
@@ -84,7 +84,7 @@
               "src/styles.css"
             ],
             "scripts": [],
-            "assets": ["src/favicon.ico", "src/assets", "src/manifest.json"]
+            "assets": ["src/favicon.png", "src/assets", "src/manifest.json"]
           }
         },
         "lint": {

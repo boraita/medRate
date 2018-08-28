@@ -1,50 +1,51 @@
 {
-  "name": "MedRate",
+  "name": "med-rate app by MedSquad",
   "short_name": "MedRate",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",
+  "orientation": "landscape-primary",
   "scope": "/",
-  "start_url": "/",
+  "start_url": "./index.html",
   "icons": [
     {
-      "src": "assets/icons/icon-72x72.png",
+      "src": "assets/icons/icon-71x50.png",
       "sizes": "72x72",
       "type": "image/png"
     },
     {
-      "src": "assets/icons/icon-96x96.png",
+      "src": "assets/icons/icon-95x67.png",
       "sizes": "96x96",
       "type": "image/png"
     },
     {
-      "src": "assets/icons/icon-128x128.png",
+      "src": "assets/icons/icon-197x90.png",
       "sizes": "128x128",
       "type": "image/png"
     },
     {
-      "src": "assets/icons/icon-144x144.png",
+      "src": "assets/icons/icon-143x101.png",
       "sizes": "144x144",
       "type": "image/png"
     },
     {
-      "src": "assets/icons/icon-152x152.png",
+      "src": "assets/icons/icon-151x107.png",
       "sizes": "152x152",
       "type": "image/png"
     },
     {
-      "src": "assets/icons/icon-192x192.png",
+      "src": "assets/icons/icon-191x135.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "assets/icons/icon-384x384.png",
+      "src": "assets/icons/icon-383x271.png",
       "sizes": "384x384",
       "type": "image/png"
     },
     {
-      "src": "assets/icons/icon-512x512.png",
-      "sizes": "512x512",
+      "src": "assets/icons/icon-511x271.png",
+      "sizes": "511x271",
       "type": "image/png"
     }
   ]
